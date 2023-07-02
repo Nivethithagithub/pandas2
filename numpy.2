@@ -1,0 +1,192 @@
+import pandas as pd
+url = 'https://raw.githubusercontent.com/justmarkham/DAT8/master/data/u.user'
+
+users=pd.read_csv(url)
+users
+
+user_id|age|gender|occupation|zip_code
+0	1|24|M|technician|85711
+1	2|53|F|other|94043
+2	3|23|M|writer|32067
+3	4|24|M|technician|43537
+4	5|33|F|other|15213
+...	...
+938	939|26|F|student|33319
+939	940|32|M|administrator|02215
+940	941|20|M|student|97229
+941	942|48|F|librarian|78209
+942	943|22|M|student|77841
+943 rows × 1 columns
+
+first ten entries
+users=pd.read_csv(url,sep="|",index_col='user_id')
+users.head(10)
+
+age	gender	occupation	zip_code
+user_id				
+1	24	M	technician	85711
+2	53	F	other	94043
+3	23	M	writer	32067
+4	24	M	technician	43537
+5	33	F	other	15213
+6	42	M	executive	98101
+7	57	M	administrator	91344
+8	36	M	administrator	05201
+9	29	M	student	01002
+10	53	M	lawyer	90703
+
+last ten entries
+users.tail(10)
+age	gender	occupation	zip_code
+user_id				
+934	61	M	engineer	22902
+935	42	M	doctor	66221
+936	24	M	other	32789
+937	48	M	educator	98072
+938	38	F	technician	55038
+939	26	F	student	33319
+940	32	M	administrator	02215
+941	20	M	student	97229
+942	48	F	librarian	78209
+943	22	M	student	77841
+
+What is the number of observations in the dataset?
+
+[ ]
+l=len(users)
+print('number of observations =',l)
+number of observations = 943
+What is the number of observations in columns?
+
+[ ]
+col=len(users.columns)
+print("number of columns=",col)
+number of columns= 4
+Print the name of all the columns.
+
+[ ]
+users.columns
+Index(['age', 'gender', 'occupation', 'zip_code'], dtype='object')
+How is the dataset indexed?
+
+[ ]
+users.index
+Int64Index([  1,   2,   3,   4,   5,   6,   7,   8,   9,  10,
+            ...
+            934, 935, 936, 937, 938, 939, 940, 941, 942, 943],
+           dtype='int64', name='user_id', length=943)
+What is the data type of each column?
+
+[ ]
+users.info()
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 943 entries, 1 to 943
+Data columns (total 4 columns):
+ #   Column      Non-Null Count  Dtype 
+---  ------      --------------  ----- 
+ 0   age         943 non-null    int64 
+ 1   gender      943 non-null    object
+ 2   occupation  943 non-null    object
+ 3   zip_code    943 non-null    object
+dtypes: int64(1), object(3)
+memory usage: 36.8+ KB
+Print only the occupation column
+
+[ ]
+users.occupation
+user_id
+1         technician
+2              other
+3             writer
+4         technician
+5              other
+           ...      
+939          student
+940    administrator
+941          student
+942        librarian
+943          student
+Name: occupation, Length: 943, dtype: object
+How many different occupations are in the dataset?
+
+[ ]
+len(users.occupation.unique())
+21
+What is the most frequent occupation?
+
+[ ]
+users.occupation.mode()
+0    student
+Name: occupation, dtype: object
+DataFrame Info.
+
+[ ]
+users.info()
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 943 entries, 1 to 943
+Data columns (total 4 columns):
+ #   Column      Non-Null Count  Dtype 
+---  ------      --------------  ----- 
+ 0   age         943 non-null    int64 
+ 1   gender      943 non-null    object
+ 2   occupation  943 non-null    object
+ 3   zip_code    943 non-null    object
+dtypes: int64(1), object(3)
+memory usage: 36.8+ KB
+Describe all the columns
+
+[ ]
+users.describe()
+
+Summarize only the occupation column
+
+[ ]
+users.occupation.value_counts()
+student          196
+other            105
+educator          95
+administrator     79
+engineer          67
+programmer        66
+librarian         51
+writer            45
+executive         32
+scientist         31
+artist            28
+technician        27
+marketing         26
+entertainment     18
+healthcare        16
+retired           14
+lawyer            12
+salesman          12
+none               9
+homemaker          7
+doctor             7
+Name: occupation, dtype: int64
+What is the mean age of users?
+
+[ ]
+users.age.mean()
+34.05196182396607
+What is the age with least occurrence?
+
+[ ]
+a=users.age.value_counts()
+b=a.sort_index(ascending=False)
+[ ]
+b.tail(10)
+19    23
+18    18
+17    14
+16     5
+15     6
+14     3
+13     5
+11     1
+10     1
+7      1
+Name: age, dtype: int64
+[ ]
+b.index[-1]
+7
